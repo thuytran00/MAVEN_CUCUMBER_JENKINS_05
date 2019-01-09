@@ -16,70 +16,15 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Reporter;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import live.pageObjects.LoginPageObject;
+import pageObjects.LoginPageObject;
 
 public class AbstractTest {
 	WebDriver driver;
 	protected final Log log;
-	protected AbstractTest() {
+	public AbstractTest() {
 		log = LogFactory.getLog(getClass());
 	}
-	public WebDriver OpenMultiBrowser(String browserName, String url) {
-		 
-		if(browserName.equals("chrome")) {
-			 
-			 //System.setProperty("webdriver.chrome.driver", ".\\resource\\chromedriver.exe");
-			 WebDriverManager.chromedriver().setup();
-			 DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-			 ChromeOptions options = new ChromeOptions();
-			 options.addArguments("--incognito");
-			 options.addArguments("--disable-extensions");
-			 options.addArguments("disable-infobars");
-			 options.addArguments("start-maximized");
-			 capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-			 
-			 driver = new ChromeDriver(capabilities);
-			 
-		 }else if (browserName.equals("firefox")) {
-			 WebDriverManager.firefoxdriver().setup();
-			 driver = new FirefoxDriver();
-			 
-		 }else if (browserName.equals("chromeheadless")) {
-			 WebDriverManager.chromedriver().setup();
-			 ChromeOptions options = new ChromeOptions();
-			 options.addArguments("headless");
-			 options.addArguments("window-size=1920x1080");
-			
-			 driver = new ChromeDriver(options);
-		 }else if (browserName.equals("ie")) {
-			 WebDriverManager.iedriver().setup();
-			 DesiredCapabilities capabilities = DesiredCapabilities.internetExplorer();
-			 capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-			 capabilities.setCapability(CapabilityType.ELEMENT_SCROLL_BEHAVIOR, true);
-			 capabilities.setCapability(InternetExplorerDriver.NATIVE_EVENTS, false);
-			 capabilities.setCapability("ignoreProtectedModeSettings", true);
-			 capabilities.setCapability("ignoreZoomSetting", true);
-			 capabilities.setCapability("requireWindowFocus", true);
-			 capabilities.setJavascriptEnabled(true);
-			 capabilities.setCapability("enableElementCacheCleanup", true);
-			 capabilities.setBrowserName("internet explorer");
-			 capabilities.setPlatform(org.openqa.selenium.Platform.ANY);
-			 driver=new InternetExplorerDriver(capabilities);
-		 }
-		 else {
-			 System.setProperty("webdriver.chrome.driver", ".\\resource\\chromedriver.exe");
-			 ChromeOptions options = new ChromeOptions();
-			 options.addArguments("headless");
-			 options.addArguments("window-size=1920x1080");
-			 driver = new ChromeDriver();
-			 
-		 }
-		 
-		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-		return driver;
-		
-	}
+	
 	  public static int randomNumber()
 	  {
 		  Random rand =new Random();
@@ -113,7 +58,12 @@ public class AbstractTest {
 		  }
 		  return pass;
 	  }
-	  protected boolean verifyTrue(boolean condition) {
+	  public boolean verifyTrue(boolean condition) {
 		  return checkPassed(condition);
 	  }
+	  public static String randomEmail() {
+			Random random = new Random();
+			String randomEmail = random.nextInt(99999) + "@gmail.com";
+			return randomEmail;
+		}
 }

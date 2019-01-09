@@ -1,7 +1,18 @@
 package commons;
 
 import java.util.List;
-import live.pageUIs.*;
+
+import pageObjects.DeleteAccountPageObject;
+import pageObjects.EditCustomerPageObject;
+import pageObjects.HomePageObject;
+import pageObjects.LoginPageObject;
+import pageObjects.MyAccountPageObject;
+import pageObjects.NewCustomerPageObject;
+import pageObjects.PageFactoryManager;
+import pageObjects.RegisterPageObject;
+import pageObjects.WithdrawPageObject;
+import pageUIs.*;
+
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -16,18 +27,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import live.pageObjects.DeleteAccountPageObject;
-import live.pageObjects.EditCustomerPageObject;
-import live.pageObjects.HomePageObject;
-import live.pageObjects.LoginPageObject;
-import live.pageObjects.MyAccountPageObject;
-import live.pageObjects.NewCustomerPageObject;
-import live.pageObjects.PageFactoryManager;
-import live.pageObjects.RegisterPageObject;
-import live.pageObjects.WithdrawPageObject;
-import live.pageObjects.LoginPageObject;
-import live.pageUIs.*;
 public class AbstractPage {
 	WebDriver driver;
 //	public AbstractPage(WebDriver driver_) {
@@ -43,6 +42,7 @@ public class AbstractPage {
 		return new LoginPageObject(driver);
 		
 	}
+	
 	public void getPageTitle(WebDriver driver) {
 		driver.getTitle();
 	}
@@ -73,11 +73,11 @@ public class AbstractPage {
 		element.clear();
 		element.sendKeys(value);
 	}
-	public void sendKeyToElement(WebDriver driver, String locator, String inputValue, String... values) {
-		locator = String.format(locator, (Object[]) values);
+	public void sendKeyToElement(WebDriver driver, String locator, String idTextboxValue, String value) {
+		locator = String.format(locator, idTextboxValue);
 		WebElement element =driver.findElement(By.xpath(locator));
 		element.clear();
-		element.sendKeys(inputValue);
+		element.sendKeys(value);
 	}
 	
 	public void selectItemInDefaultDropdown(WebDriver driver, String locator, String item) {
@@ -375,71 +375,20 @@ public class AbstractPage {
   		}else {
   			clickToElement(driver, LoginPageUI.ACCOUNT_LINK,"My Account");
   		}
-  		return live.pageObjects.PageFactoryManager.getMyAccountPage(driver);
+  		return pageObjects.PageFactoryManager.getMyAccountPage(driver);
   	}
   	public AbstractPage clickToDynamicButton(WebDriver driver, String titleName) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
-  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
+  		waitForControlVisible(driver, pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
+  		clickToElement(driver, pageUIs.AbstractPageUI.DYNAMIC_BUTTON,titleName);
   		if(driver.toString().toLowerCase().contains("internetexplorer")) {
   			
   			sleepWithDynamicTimeout(5);
   		}
   		return null;
-  		//return live.pageObjects.PageFactoryManager.getRegisterPage(driver);
+  		//return pageObjects.PageFactoryManager.getRegisterPage(driver);
   	}
-  	public void sendKeytoDynamicTextbox(WebDriver driver, String textboxName, String value) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_TEXTBOX_RADIO_CHECKBOX,textboxName);
-  		sendKeyToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_TEXTBOX_RADIO_CHECKBOX,value,textboxName);
-  		//return null;
-  		//return live.pageObjects.PageFactoryManager.getRegisterPage(driver);
-  	}
-  	public live.pageObjects.HomePageObject openLogoutPage(WebDriver driver) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LABEL_TEXT,"Account");
-  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LABEL_TEXT, "Account");
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
-  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_HEADER_LINK,"Log Out");
-  		if(driver.toString().toLowerCase().contains("internetexplorer")) {
-  			sleepWithDynamicTimeout(5);
-  		}
-  		//return null;
-  		return live.pageObjects.PageFactoryManager.getHomePage(driver);
-  	}
-  	public AbstractPage openDynamicLiveGurupage(WebDriver driver,String pageName) {
-  		waitForControlVisible(driver,live.pageUIs.AbstractPageUI.DYNAMIC_COMMON_LINK,pageName );
-  		clickToElement(driver, live.pageUIs.AbstractPageUI.DYNAMIC_COMMON_LINK,pageName);
-  		if(driver.toString().toLowerCase().contains("internetexplorer")) {
-  			sleepWithDynamicTimeout(5);
-  		}
-  		switch(pageName) {
-  		case "Mobile":
-  			return live.pageObjects.PageFactoryManager.getMobilePage(driver);
-  		case "TV":
-  			return live.pageObjects.PageFactoryManager.getTVPage(driver);
-  		default:
-  			return live.pageObjects.PageFactoryManager.getHomePage(driver);
-  		}
-  	}
-  	public boolean isDynamicProductImageDisplay(WebDriver driver,String imageName) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_IMAGE,imageName);
-  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_IMAGE,imageName);
-  	}
-	public boolean isDynamicProductNameDisplay(WebDriver driver,String productName) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_NAME,productName);
-  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_NAME,productName);
-  	}
-	public boolean isDynamicProductPriceDisplay(WebDriver driver,String productName, String expectPrice) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_PRICE,productName);
-  		String actualPrice = getTextElement(driver,live.pageUIs.AbstractPageUI.DYNAMIC_PRODUCT_PRICE,productName);
-  		return actualPrice.trim() ==expectPrice;
-  	}
-	public boolean isDynamicProductAddToCartDisplay(WebDriver driver,String productName) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_TO_CART_BUTTON,productName);
-  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_TO_CART_BUTTON,productName);
-  	}
-	public boolean isDynamicProductAddToWishlistOrCompareButton(WebDriver driver,String productName,String wishlistOrCompareButtonname) {
-  		waitForControlVisible(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_WISHLIST_OR_COMPARE,productName,wishlistOrCompareButtonname);
-  		return isControlDisplay(driver, live.pageUIs.AbstractPageUI.DYNAMIC_ADD_WISHLIST_OR_COMPARE,productName,wishlistOrCompareButtonname);
-  	}
+  	
+  	
 	public Object clickToElementByJS(WebElement element) {
 		JavascriptExecutor js =(JavascriptExecutor) driver;
 		return js.executeScript("arguments[0].click();", element);

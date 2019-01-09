@@ -1,4 +1,3 @@
-@account
 Feature: CUSTOMER
   As a PO
   I want to login to application
@@ -6,7 +5,7 @@ Feature: CUSTOMER
   
 @register
 Scenario: Register to application  
-   Given I get login page Url
+   Given I get Login page Url
    And I click to here link
    And I input to email textbox with data "autorandom"
    And I click to Submit button at Register Page
@@ -25,7 +24,7 @@ Scenario: Register to application
     When Input to New Customer form with data
       | Name    | DateOfBirth   | Address   | City   | State   | Pin   | Phone   | Email   | Password   |
       | <Name>  | <DateOfBirth> | <Address> | <City> | <State> | <Pin> | <Phone> | <Email> | <Password> |
-    And I sleep some times
+    
     #And I click to Submit button at New Customer page
     #Then Verify message displayed with data "<Message>"
     #And I verify all above infomation created success

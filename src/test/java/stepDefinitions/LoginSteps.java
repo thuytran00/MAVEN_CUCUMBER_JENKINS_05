@@ -25,44 +25,6 @@ public class LoginSteps {
 		driver = Hooks.openBrowser();
 	}
 
-	@When("^I get login page Url$")
-	public void iGetLoginPageUrl() {
-		loginPageUrl = driver.getCurrentUrl();
-	}
-
-	@When("^I click to here link$")
-	public void iClickToHereLink() {
-		driver.findElement(By.xpath("//a[text()='here']")).click();
-	}
-
-	@When("^I open Login page again$")
-	public void iOpenLoginPageAgain() {
-		driver.get(loginPageUrl);
-	}
-
-	@When("^I input to email textbox with data \"(.*?)\"$")
-	public void iInputToEmailTextboxWithData(String email) {
-		driver.findElement(By.xpath("//input[@name='emailid']")).sendKeys(email + randomEmail());
-
-	}
-
-	@When("^I click to Submit button at Register Page$")
-	public void iClickToSubmitButtonAtRegiaterPage() {
-		driver.findElement(By.xpath("//input[@name='btnLogin']")).click();
-	}
-
-	@Then("^I get UserID infor$")
-	public void iGetUserIDInfor() {
-		userID = driver.findElement(By.xpath("//td[text()='User ID :']/following-sibling::td")).getText();
-		System.out.println(userID);
-	}
-
-	@Then("^I get Password infor$")
-	public void iGetPasswordInfor() {
-		password = driver.findElement(By.xpath("//td[text()='Password :']/following-sibling::td")).getText();
-		System.out.println(password);
-	}
-
 	@When("^I open login page by url$")
 	public void iOpenLoginPageByUrl() {
 		driver.get("http://demo.guru99.com/V1/index.php");
@@ -73,27 +35,7 @@ public class LoginSteps {
 		driver.findElement(By.xpath("//input[@name='btnLogin']")).click();
 	}
 
-	@When("^I input to UserID textbox$")
-	public void i_input_to_UserID_textbox() {
-		driver.findElement(By.xpath("//input[@name='uid']")).sendKeys(userID);
-	}
-
-	@When("^I input to Password textbox$")
-	public void i_input_to_Password_textbox() {
-		driver.findElement(By.xpath("//input[@name='password']")).sendKeys(password);
-	}
-
-	@When("^I click to Login button at Login page$")
-	public void i_click_to_Login_button_at_Login_page() {
-		driver.findElement(By.xpath("//input[@name='btnLogin']")).click();
-	}
-
-	@SuppressWarnings("deprecation")
-	@Then("^Verify Homepage displayed with message \"([^\"]*)\"$")
-	public void verify_Homepage_displayed_with_message(String messageName) {
-		Assert.assertTrue(driver.findElement(By.xpath("//marquee[text()=\"" + messageName + "\"]")).isDisplayed());
-	}
-
+	
 	@Then("^I close browser$")
 	public void i_close_browser() {
 		driver.quit();
@@ -101,8 +43,13 @@ public class LoginSteps {
 	}
 	
 	@When("^I sleep some times$")
-	public void iSleepSomeTime() throws InterruptedException {
-		Thread.sleep(10000);
+	public void iSleepSomeTime()  {
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	@Given("^I open New Customer page$")

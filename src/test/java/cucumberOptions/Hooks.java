@@ -1,8 +1,7 @@
 package cucumberOptions;
-
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
+
 import cucumber.api.java.Before;
 
 public class Hooks {
@@ -28,7 +28,7 @@ public class Hooks {
 				if (browser == null) {
 					browser = System.getenv("BROWSER");
 					if (browser == null) {
-						browser = "firefox";
+						browser = "chrome";
 					}
 				}
 

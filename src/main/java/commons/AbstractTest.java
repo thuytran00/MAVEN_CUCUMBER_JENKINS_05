@@ -1,22 +1,12 @@
 package commons;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.logging.Log;
-import org.junit.Assert;
-import org.openqa.jetty.log.LogFactory;
+import org.apache.commons.logging.LogFactory;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.Assert;
 import org.testng.Reporter;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
-import pageObjects.LoginPageObject;
 
 public class AbstractTest {
 	WebDriver driver;
@@ -46,21 +36,32 @@ public class AbstractTest {
 		  }
 		  return pass;
 	  }
+	  
 	  private boolean checkFailed(boolean condition) {
-		  boolean pass = true;
-		  try {
-			  
-			  Assert.assertTrue(condition);
-			
-		  }catch(Throwable e) {
-			  pass=false;
-			  Reporter.getCurrentTestResult().setThrowable(e);
-		  }
-		  return pass;
-	  }
+			boolean pass = true;
+			try {
+				if (condition == true)
+					log.info("===PASSED===");
+				else
+					log.info("===FAILED===");
+				Assert.assertFalse(condition);
+			} catch (Throwable e) {
+				pass = false;
+				log.info(e);
+				VerificationFailures.getFailures().addFailureForTest(Reporter.getCurrentTestResult(), e);
+				Reporter.getCurrentTestResult().setThrowable(e);
+			}
+			return pass;
+		}
+	  
+		public boolean verifyFalse(boolean condition) {
+			return checkFailed(condition);
+		}
+	  
 	  public boolean verifyTrue(boolean condition) {
 		  return checkPassed(condition);
 	  }
+	  
 	  public static String randomEmail() {
 			Random random = new Random();
 			String randomEmail = random.nextInt(99999) + "@gmail.com";

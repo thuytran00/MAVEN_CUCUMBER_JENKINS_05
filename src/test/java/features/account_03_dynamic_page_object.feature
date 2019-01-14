@@ -45,4 +45,4 @@ Feature: CUSTOMER
 
     Examples: New Customer info
       | Name      | DateOfBirth | Address    | City        | State   | Pin    | Phone      | Email    | Password | Message                             |
-      | Auto Test | 1999-01-01  | 123 Le Loi | Ho Chi Minh | Thu Duc | 123456 | 0987654321 | autotest | 123123   | Customer Registered Successfully!!! |
+      | Auto Test | 01-01-1990  | 123 Le Loi | Ho Chi Minh | Thu Duc | 123456 | 0987654321 | autotest | 123123   | Customer Registered Successfully!!! |

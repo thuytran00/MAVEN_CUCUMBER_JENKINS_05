@@ -31,6 +31,9 @@ Feature: Title of your feature
   # Link
   And I open "New Customer" page
   And I open "Edit Customer" page
+  #Regex
+  And I input first Account ID
+  And I input second Account ID
   # --------------- VERIFY ------------------#
   
   And Verify message "Customer Registered Successfully!!!" displayed success

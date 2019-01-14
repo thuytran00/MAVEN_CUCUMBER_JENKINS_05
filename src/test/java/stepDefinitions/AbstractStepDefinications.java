@@ -95,4 +95,12 @@ public class AbstractStepDefinications {
 			abstractPage.sleepWithDynamicTimes(times);
 			
 		}
+		@When("^I input (first|second) Account ID$")
+		public void iInputFirstAccountID(String account) {
+			if(account.equalsIgnoreCase("first")) {
+				
+			}
+			if(account.equalsIgnoreCase("second")) {
+		}
+		}
 }

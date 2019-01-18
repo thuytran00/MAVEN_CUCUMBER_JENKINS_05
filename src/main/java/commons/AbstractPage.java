@@ -37,6 +37,7 @@ public class AbstractPage {
 		driver.manage().timeouts().implicitlyWait(longTimeout, TimeUnit.SECONDS);
 		
 	}
+	//
 	public LoginPageObject openLoginPage( String url) {
 		openAnyUrl(driver, url);
 		return new LoginPageObject(driver);

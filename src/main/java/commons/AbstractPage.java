@@ -174,7 +174,7 @@ public class AbstractPage {
 		Alert alert = driver.switchTo().alert();
 		alert.dismiss();
 	}
-	
+	//update comment exam
 	public void getTextAlert(WebDriver driver) {
 		Alert alert = driver.switchTo().alert();
 		alert.getText();
